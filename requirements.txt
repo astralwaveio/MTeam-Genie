@@ -1,0 +1,14 @@
+certifi~=2025.4.26
+charset-normalizer~=3.4.2
+idna~=3.10
+load-dotenv~=0.1.0
+packaging~=25.0
+pillow~=11.2.1
+python-dateutil~=2.9.0.post0
+python-dotenv~=1.1.0
+pytz~=2025.2
+qbittorrent-api~=2025.5.0
+requests~=2.32.3
+six~=1.17.0
+urllib3~=2.4.0
+python-telegram-bot~=22.1
