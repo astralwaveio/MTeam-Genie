@@ -2,3 +2,8 @@
 *.json
 *_log*
 *.json.*
+
+/notify.py
+/ql_sample.js
+/ql_sample.py
+/sendNotify.js

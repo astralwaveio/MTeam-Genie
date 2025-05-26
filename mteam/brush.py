@@ -20,14 +20,13 @@ from typing import Optional, Dict, Any, List, Union
 import pytz
 import requests
 from dateutil import parser as date_parser
-# qbittorrentapi 相关导入，不再尝试导入 TorrentInfo
 from qbittorrentapi import Client, LoginFailed, APIConnectionError, APIError, TorrentInfoList
 from telegram import Bot
 from telegram.constants import ParseMode
 from telegram.error import TelegramError
 
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,
     format="%(asctime)s - %(levelname)s - %(name)s - %(module)s:%(funcName)s - %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
@@ -39,7 +38,6 @@ class Config:
 
     def __init__(self):
         logger.info("⚙️ 初始化配置...")
-
         self.QBIT_HOST: str = os.environ.get("QBIT_HOST", "localhost")
         self.QBIT_PORT: int = int(os.environ.get("QBIT_PORT", "8080"))
         self.QBIT_USERNAME: str = os.environ.get("QBIT_USERNAME", "admin")
@@ -48,16 +46,12 @@ class Config:
         self.QBIT_TAGS: List[str] = [tag.strip() for tag in qbit_tags_str.split(',') if tag.strip()]
         self.QBIT_CATEGORY: str = os.environ.get("QBIT_CATEGORY", "刷流")
         self.QBIT_SAVE_PATH: str = os.environ.get("QBIT_SAVE_PATH", "/vol1/1000/Media/MTBrush")
-
-        self.MT_HOST: Optional[str] = os.environ.get("MT_HOST")
+        self.MT_HOST: Optional[str] = os.environ.get("MT_HOST", "https://api.m-team.cc")
         self.MT_APIKEY: Optional[str] = os.environ.get("MT_APIKEY")
-        self.MT_RSS_URL: Optional[str] = os.environ.get("MT_RSS_URL")
-
-        self.TG_BOT_TOKEN: Optional[str] = os.environ.get("TG_BOT_TOKEN")
+        self.MT_RSS_URL_BRUSH: Optional[str] = os.environ.get("MT_RSS_URL_BRUSH")
+        self.TG_BOT_TOKEN_MONITOR: Optional[str] = os.environ.get("TG_BOT_TOKEN_MONITOR")
         self.TG_CHAT_ID: Optional[str] = os.environ.get("TG_CHAT_ID")
-
-        self.DATA_FILE_PATH: str = os.environ.get("DATA_FILE_PATH", "mteam/flood_data.json")
-
+        self.DATA_FILE_PATH: str = os.environ.get("DATA_FILE_PATH", "mteam/brush_data.json")
         self.DISK_SPACE_LIMIT_GB: float = float(os.environ.get("DISK_SPACE_LIMIT_GB", 80))
         self.MAX_TORRENT_SIZE_GB: float = float(os.environ.get("MAX_TORRENT_SIZE_GB", 30))
         self.MIN_TORRENT_SIZE_GB: float = float(os.environ.get("MIN_TORRENT_SIZE_GB", 1))
@@ -65,22 +59,13 @@ class Config:
         self.SEED_PUBLISH_BEFORE_HOURS: int = int(os.environ.get("SEED_PUBLISH_BEFORE_HOURS", 24))
         self.DOWNLOADERS_TO_SEEDERS_RATIO: float = float(os.environ.get("DOWNLOADERS_TO_SEEDERS_RATIO", 1.0))
         self.USE_IPV6_DOWNLOAD: bool = os.environ.get("USE_IPV6_DOWNLOAD", "False").lower() == 'true'
-
         self.MAX_UNFINISHED_DOWNLOADS: int = int(os.environ.get("MAX_UNFINISHED_DOWNLOADS", 50))
-
         self.API_REQUEST_DELAY_MIN: float = float(os.environ.get("API_REQUEST_DELAY_MIN", 1.5))
         self.API_REQUEST_DELAY_MAX: float = float(os.environ.get("API_REQUEST_DELAY_MAX", 3.5))
-
         self.SEED_FREE_TIME_SECONDS: int = self.SEED_FREE_TIME_HOURS * 3600
         self.SEED_PUBLISH_BEFORE_SECONDS: int = self.SEED_PUBLISH_BEFORE_HOURS * 3600
-
         self.TZ_INFOS: Dict[str, pytz.BaseTzInfo] = {"CST": pytz.timezone("Asia/Shanghai")}
         self.LOCAL_TIMEZONE: pytz.BaseTzInfo = pytz.timezone("Asia/Shanghai")
-
-        if not self.MT_HOST:
-            self.MT_HOST = "https://api.m-team.cc"
-            logger.info("MT_HOST 未在环境变量中设置，使用默认值: https://api.m-team.cc")
-
         self._validate_critical_configs()
         logger.info(f"👍 配置加载成功。未完成任务数限制: {self.MAX_UNFINISHED_DOWNLOADS}")
 
@@ -88,16 +73,17 @@ class Config:
         critical_missing = []
         if not self.MT_APIKEY:
             critical_missing.append("MTeam API密钥 (MT_APIKEY)")
-        if not self.MT_RSS_URL:
-            critical_missing.append("MTeam RSS订阅URL (MT_RSS_URL)")
+        if not self.MT_RSS_URL_BRUSH:
+            critical_missing.append("MTeam RSS订阅URL (MT_RSS_URL_BRUSH)")
 
         if critical_missing:
             error_msg = "、".join(critical_missing) + " 未设置。脚本无法运行。"
             logger.critical(f"🚫 {error_msg}")
             sys.exit(f"CRITICAL: {error_msg}")
 
-        if not self.TG_BOT_TOKEN or not self.TG_CHAT_ID:
-            logger.warning("⚠️ Telegram机器人Token (TG_BOT_TOKEN) 或频道ID (TG_CHAT_ID) 未配置。通知功能将不可用。")
+        if not self.TG_BOT_TOKEN_MONITOR or not self.TG_CHAT_ID:
+            logger.warning(
+                "⚠️ Telegram机器人Token (TG_BOT_TOKEN_MONITOR) 或频道ID (TG_CHAT_ID) 未配置。通知功能将不可用。")
 
 
 class Utils:
@@ -264,9 +250,9 @@ class TelegramNotifier:
     def __init__(self, config: Config):
         self.config = config
         self.bot: Optional[Bot] = None
-        if self.config.TG_BOT_TOKEN and self.config.TG_CHAT_ID:
+        if self.config.TG_BOT_TOKEN_MONITOR and self.config.TG_CHAT_ID:
             try:
-                self.bot = Bot(token=self.config.TG_BOT_TOKEN)
+                self.bot = Bot(token=self.config.TG_BOT_TOKEN_MONITOR)
                 logger.info("🤖 Telegram机器人已成功初始化。")
             except Exception as e:
                 logger.error(f"🚫 初始化Telegram机器人失败: {e}")
@@ -314,10 +300,9 @@ class TelegramNotifier:
 
         count = len(added_torrents)
         message_lines = [
-            f"<b>🎉 MTeam刷流脚本：本轮成功添加 {count} 个新种子！</b>",
-            "🌸➖➖➖➖➖➖➖➖🌸"
+            f"<b>🎉 MTeam刷流脚本：本轮成功添加 {count} 个新种子！</b>\n",
         ]
-        for torrent_info_dict in added_torrents:  # Renamed for clarity
+        for torrent_info_dict in added_torrents:
             name = self._escape_html(torrent_info_dict.get("name", "N/A"))
             renamed_to = self._escape_html(torrent_info_dict.get("renamed_to", "N/A"))
             size_str = Utils.format_size(torrent_info_dict.get("size_bytes", 0))
@@ -332,7 +317,6 @@ class TelegramNotifier:
                 f"  💾 {size_str} | 🎁 {discount} | 📊 {ls_ratio}"
             )
             message_lines.append(entry)
-            message_lines.append("🌸➖➖➖➖➖➖➖➖🌸")
 
         if duration_seconds is not None:
             message_lines.append(f"⏱️ <b>任务总耗时:</b> {duration_seconds:.2f} 秒")
@@ -436,12 +420,12 @@ class MTeamManager:
         return None
 
     def get_rss_feed_items(self) -> List[Dict[str, Any]]:
-        if not self.config.MT_RSS_URL:
+        if not self.config.MT_RSS_URL_BRUSH:
             logger.error("🚫 MTeam RSS URL 未配置。")
             return []
-        logger.info(f"📰 正在从 RSS 订阅源获取项目: {self.config.MT_RSS_URL[:100]}...")
+        logger.info(f"📰 正在从 RSS 订阅源获取项目: {self.config.MT_RSS_URL_BRUSH[:100]}...")
         try:
-            response = self.session.get(self.config.MT_RSS_URL, timeout=45)
+            response = self.session.get(self.config.MT_RSS_URL_BRUSH, timeout=45)
             response.raise_for_status()
 
             xml_content = response.text
@@ -961,7 +945,7 @@ async def main():
 
 
 if __name__ == "__main__":
-    required_env_vars = ["MT_APIKEY", "MT_RSS_URL", "QBIT_HOST", "QBIT_USERNAME", "QBIT_PASSWORD"]
+    required_env_vars = ["MT_APIKEY", "MT_RSS_URL_BRUSH", "QBIT_HOST", "QBIT_USERNAME", "QBIT_PASSWORD"]
     missing_vars = [var for var in required_env_vars if not os.environ.get(var)]
 
     if missing_vars:
@@ -969,7 +953,7 @@ if __name__ == "__main__":
         print(error_message)
         logger.critical(error_message)
 
-        temp_tg_token = os.environ.get("TG_BOT_TOKEN")
+        temp_tg_token = os.environ.get("TG_BOT_TOKEN_MONITOR")
         temp_tg_chat_id = os.environ.get("TG_CHAT_ID")
         if temp_tg_token and temp_tg_chat_id:
             try:
@@ -988,8 +972,8 @@ if __name__ == "__main__":
                 print(f"发送Telegram通知失败: {tg_err}")
         sys.exit(1)
 
-    if not os.environ.get("TG_BOT_TOKEN") or not os.environ.get("TG_CHAT_ID"):
-        warning_msg = "警告：Telegram 环境变量 TG_BOT_TOKEN 或 TG_CHAT_ID 未设置，通知功能将不可用。"
+    if not os.environ.get("TG_BOT_TOKEN_MONITOR") or not os.environ.get("TG_CHAT_ID"):
+        warning_msg = "警告：Telegram 环境变量 TG_BOT_TOKEN_MONITOR 或 TG_CHAT_ID 未设置，通知功能将不可用。"
         print(warning_msg)
         logger.warning(warning_msg)
 

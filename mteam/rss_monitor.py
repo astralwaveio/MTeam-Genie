@@ -28,10 +28,37 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Global constant for category data
+# 全局常量
 CATEGORY_JSON_DATA = """
 {"movie":["401","419","420","421","439"],"music":["406","434"],"list":[{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-26 23:50:33","id":"100","order":"1","nameChs":"电影","nameCht":"電影","nameEng":"Movie","image":"","parent":null},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-05-22 13:05:21","id":"423","order":"1","nameChs":"PC游戏","nameCht":"PC遊戲","nameEng":"PCGame","image":"game-pc-3.jpeg","parent":"447"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2025-05-01 12:09:56","id":"427","order":"1","nameChs":"電子書","nameCht":"電子書","nameEng":"E-Book","image":"ebook-4.png","parent":"450"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-22 14:00:15","id":"401","order":"1","nameChs":"电影/SD","nameCht":"電影/SD","nameEng":"Movie/SD","image":"moviesd.png","parent":"100"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-04-13 16:52:09","id":"434","order":"1","nameChs":"Music(无损)","nameCht":"Music(無損)","nameEng":"Music(Lossless)","image":"flac.png","parent":"110"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-04-13 16:50:37","id":"403","order":"1","nameChs":"影剧/综艺/SD","nameCht":"影劇/綜藝/SD","nameEng":"TV Series/SD","image":"tvsd.png","parent":"105"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-04-13 16:52:05","id":"404","order":"1","nameChs":"纪录","nameCht":"紀錄","nameEng":"Record","image":"bbc.png","parent":"444"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-04-13 17:25:00","id":"405","order":"1","nameChs":"动画","nameCht":"動畫","nameEng":"Anime","image":"anime.png","parent":"449"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-04-13 17:25:04","id":"407","order":"1","nameChs":"运动","nameCht":"運動","nameEng":"Sports","image":"sport.png","parent":"450"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-22 14:00:15","id":"419","order":"2","nameChs":"电影/HD","nameCht":"電影/HD","nameEng":"Movie/HD","image":"moviehd.png","parent":"100"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-04-13 17:25:06","id":"422","order":"2","nameChs":"软件","nameCht":"軟體","nameEng":"Software","image":"software.png","parent":"450"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-04-13 16:50:42","id":"402","order":"2","nameChs":"影剧/综艺/HD","nameCht":"影劇/綜藝/HD","nameEng":"TV Series/HD","image":"tvhd.png","parent":"105"},{"createdDate":"2024-04-13 17:16:22","lastModifiedDate":"2024-04-13 17:16:31","id":"448","order":"2","nameChs":"TV遊戲","nameCht":"TV遊戲","nameEng":"TvGame","image":"pcgame.png","parent":"447"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-26 23:50:36","id":"105","order":"2","nameChs":"影剧/综艺","nameCht":"影劇/綜藝","nameEng":"TV Series","image":"","parent":null},{"createdDate":"2024-04-13 02:03:17","lastModifiedDate":"2024-06-15 02:26:21","id":"442","order":"3","nameChs":"有聲書","nameCht":"有聲書","nameEng":"AuiBook","image":"Study_Audio.png","parent":"450"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-04-13 16:50:45","id":"438","order":"3","nameChs":"影剧/综艺/BD","nameCht":"影劇/綜藝/BD","nameEng":"TV Series/BD","image":"tvbd.png","parent":"105"},{"createdDate":"2024-04-13 16:40:33","lastModifiedDate":"2024-04-13 16:40:33","id":"444","order":"3","nameChs":"紀錄","nameCht":"紀錄","nameEng":"BBC","image":null,"parent":null},{"createdDate":"2025-05-03 14:22:10","lastModifiedDate":"2025-05-03 16:55:12","id":"451","order":"3","nameChs":"教育影片","nameCht":"教育影片","nameEng":"教育影片","image":"Study_Video.png","parent":"450"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-04-13 16:52:15","id":"406","order":"3","nameChs":"演唱","nameCht":"演唱","nameEng":"MV","image":"mv.png","parent":"110"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-22 14:00:15","id":"420","order":"3","nameChs":"电影/DVDiSo","nameCht":"電影/DVDiSo","nameEng":"Movie/DVDiSo","image":"moviedvd.png","parent":"100"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-04-13 16:50:26","id":"435","order":"4","nameChs":"影剧/综艺/DVDiSo","nameCht":"影劇/綜藝/DVDiSo","nameEng":"TV Series/DVDiSo","image":"tvdvd.png","parent":"105"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-26 23:50:49","id":"110","order":"4","nameChs":"Music","nameCht":"Music","nameEng":"Music","image":"","parent":null},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-04-13 17:25:08","id":"409","order":"4","nameChs":"Misc(其他)","nameCht":"Misc(其他)","nameEng":"Misc(Other)","image":"other.png","parent":"450"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-22 14:00:15","id":"421","order":"4","nameChs":"电影/Blu-Ray","nameCht":"電影/Blu-Ray","nameEng":"Movie/Blu-Ray","image":"moviebd.png","parent":"100"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-22 14:00:15","id":"439","order":"5","nameChs":"电影/Remux","nameCht":"電影/Remux","nameEng":"Movie/Remux","image":"movieremux.png","parent":"100"},{"createdDate":"2024-04-13 17:15:28","lastModifiedDate":"2024-04-13 17:15:37","id":"447","order":"6","nameChs":"遊戲","nameCht":"遊戲","nameEng":"遊戲","image":null,"parent":null},{"createdDate":"2024-04-13 17:22:46","lastModifiedDate":"2024-04-13 17:22:55","id":"449","order":"7","nameChs":"動漫","nameCht":"動漫","nameEng":"Anime","image":null,"parent":null},{"createdDate":"2024-04-13 17:24:09","lastModifiedDate":"2024-04-13 17:24:09","id":"450","order":"8","nameChs":"其他","nameCht":"其他","nameEng":"其他","image":null,"parent":null},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-26 23:51:46","id":"115","order":"20","nameChs":"AV(有码)","nameCht":"AV(有碼)","nameEng":"AV(有碼)","image":"","parent":null},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-26 23:51:50","id":"120","order":"21","nameChs":"AV(无码)","nameCht":"AV(無碼)","nameEng":"AV(無碼)","image":"","parent":null},{"createdDate":"2024-04-13 16:52:43","lastModifiedDate":"2024-04-13 16:52:51","id":"445","order":"22","nameChs":"IV","nameCht":"IV","nameEng":"IV","image":null,"parent":null},{"createdDate":"2024-04-13 16:53:44","lastModifiedDate":"2024-04-13 16:53:44","id":"446","order":"23","nameChs":"H-ACG","nameCht":"H-ACG","nameEng":"H-ACG","image":null,"parent":null},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-22 14:00:15","id":"410","order":"31","nameChs":"AV(有码)/HD Censored","nameCht":"AV(有碼)/HD Censored","nameEng":"AV(有碼)/HD Censored","image":"cenhd.png","parent":"115"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-22 14:00:15","id":"429","order":"32","nameChs":"AV(无码)/HD Uncensored","nameCht":"AV(無碼)/HD Uncensored","nameEng":"AV(無碼)/HD Uncensored","image":"uenhd.png","parent":"120"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-22 14:00:15","id":"424","order":"33","nameChs":"AV(有码)/SD Censored","nameCht":"AV(有碼)/SD Censored","nameEng":"AV(有碼)/SD Censored","image":"censd.png","parent":"115"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-22 14:00:15","id":"430","order":"34","nameChs":"AV(无码)/SD Uncensored","nameCht":"AV(無碼)/SD Uncensored","nameEng":"AV(無碼)/SD Uncensored","image":"uensd.png","parent":"120"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-22 14:00:15","id":"426","order":"35","nameChs":"AV(无码)/DVDiSo Uncensored","nameCht":"AV(無碼)/DVDiSo Uncensored","nameEng":"AV(無碼)/DVDiSo Uncensored","image":"uendvd.png","parent":"120"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-22 14:00:15","id":"437","order":"36","nameChs":"AV(有码)/DVDiSo Censored","nameCht":"AV(有碼)/DVDiSo Censored","nameEng":"AV(有碼)/DVDiSo Censored","image":"cendvd.png","parent":"115"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-22 14:00:15","id":"431","order":"37","nameChs":"AV(有码)/Blu-Ray Censored","nameCht":"AV(有碼)/Blu-Ray Censored","nameEng":"AV(有碼)/Blu-Ray Censored","image":"cenbd.png","parent":"115"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-22 14:00:15","id":"432","order":"38","nameChs":"AV(无码)/Blu-Ray Uncensored","nameCht":"AV(無碼)/Blu-Ray Uncensored","nameEng":"AV(無碼)/Blu-Ray Uncensored","image":"uenbd.png","parent":"120"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-22 14:00:15","id":"436","order":"39","nameChs":"AV(网站)/0Day","nameCht":"AV(網站)/0Day","nameEng":"AV(網站)/0Day","image":"adult0day.png","parent":"120"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-22 14:00:15","id":"425","order":"40","nameChs":"IV(写真影集)","nameCht":"IV(寫真影集)","nameEng":"IV/Video Collection","image":"ivvideo.png","parent":"445"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-22 14:00:15","id":"433","order":"41","nameChs":"IV(写真图集)","nameCht":"IV(寫真圖集)","nameEng":"IV/Picture Collection","image":"ivpic.png","parent":"445"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-22 14:00:15","id":"411","order":"51","nameChs":"H-游戏","nameCht":"H-遊戲","nameEng":"H-Game","image":"hgame.png","parent":"446"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-22 14:00:15","id":"412","order":"52","nameChs":"H-动漫","nameCht":"H-動畫","nameEng":"H-Anime","image":"hanime.png","parent":"446"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-22 14:00:15","id":"413","order":"53","nameChs":"H-漫画","nameCht":"H-漫畫","nameEng":"H-Comic","image":"hcomic.png","parent":"446"},{"createdDate":"2024-03-22 14:00:15","lastModifiedDate":"2024-03-22 14:00:15","id":"440","order":"440","nameChs":"AV(Gay)/HD","nameCht":"AV(Gay)/HD","nameEng":"AV(Gay)/HD","image":"gayhd.gif","parent":"120"}],"tvshow":["403","402","435","438"],"adult":["410","429","424","430","426","437","431","432","436","425","433","411","412","413","440"],"waterfall":["410","401","419","420","421","439","402","403","435","438","408","434","424","431","437","426","429","430","432","436","440","404","405","406","407","409","411","412","413","422","423","425","427","433","441","442","448"]}
 """
+
+MTEAM_CATEGORY_DATA = {
+    "100": "电影", "423": "PC游戏", "427": "电子書", "401": "电影/SD", "434": "Music(无损)",
+    "403": "影剧/综艺/SD", "404": "纪录", "405": "动画", "407": "运动", "419": "电影/HD",
+    "422": "软件", "402": "影剧/综艺/HD", "448": "TV遊戲", "105": "影剧/综艺", "442": "有聲書",
+    "438": "影剧/综艺/BD", "444": "紀錄", "451": "教育影片", "406": "演唱", "420": "电影/DVDiSo",
+    "435": "影剧/综艺/DVDiSo", "110": "Music", "409": "Misc(其他)", "421": "电影/Blu-Ray",
+    "439": "电影/Remux", "447": "遊戲", "449": "動漫", "450": "其他", "115": "AV(有码)",
+    "120": "AV(无码)", "445": "IV", "446": "H-ACG", "410": "AV(有码)/HD Censored",
+    "429": "AV(无码)/HD Uncensored", "424": "AV(有码)/SD Censored", "430": "AV(无码)/SD Uncensored",
+    "426": "AV(无码)/DVDiSo Uncensored", "437": "AV(有码)/DVDiSo Censored",
+    "431": "AV(有码)/Blu-Ray Censored", "432": "AV(无码)/Blu-Ray Uncensored",
+    "436": "AV(网站)/0Day", "425": "IV(写真影集)", "433": "IV(写真图集)", "411": "H-游戏",
+    "412": "H-动漫", "413": "H-漫画", "440": "AV(Gay)/HD"
+}
+
+# Emoji 映射
+EMOJI_ID = "🆔"
+EMOJI_CATEGORY = "🏷️"
+EMOJI_SUBTITLE = "📜"
+EMOJI_NAME = "🔗"
+EMOJI_SIZE = "💾"
+EMOJI_TIME = "⏰"
+EMOJI_MOVIE = "🎬"
+EMOJI_TV = "📺"
+EMOJI_MUSIC = "🎶"
+EMOJI_DOCUMENT = "📚"
 
 
 class CategoryManager:
@@ -77,6 +104,7 @@ class CategoryManager:
 
         cat_info: Optional[Dict[str, Any]] = None
         identifier_lower = identifier.lower()
+        logger.debug(f"初始化分类管理器: {cat_info}")
 
         if is_id_lookup:
             cat_info = self.categories_by_id.get(identifier)
@@ -89,7 +117,7 @@ class CategoryManager:
             if not cat_info and identifier in self.categories_by_id:
                 cat_info = self.categories_by_id.get(identifier)
 
-        if cat_info:
+        if cat_info is not None:
             return cat_info.get("nameCht")
 
         logger.debug(f"未能为标识符 '{identifier}' (is_id_lookup={is_id_lookup}) 找到对应的分类信息。")
@@ -100,8 +128,8 @@ class Config:
     def __init__(self):
         logger.info("⚙️ 初始化配置...")
 
-        self.RSS_URL: Optional[str] = os.environ.get("MT_RSS_URL")
-        self.TG_BOT_TOKEN: Optional[str] = os.environ.get("TG_BOT_TOKEN")
+        self.RSS_URL: Optional[str] = os.environ.get("MT_RSS_URL_MOVIE")
+        self.TG_BOT_TOKEN_MONITOR: Optional[str] = os.environ.get("TG_BOT_TOKEN_MONITOR")
         self.TG_CHAT_ID: Optional[str] = os.environ.get("TG_CHAT_ID")
         self.DATA_FILE_PATH: str = os.environ.get("DATA_FILE_PATH", "mteam/rss_monitor_data.json")
         self.LOG_LEVEL: str = os.environ.get("LOG_LEVEL", "INFO").upper()
@@ -133,9 +161,9 @@ class Config:
     def _validate_critical_configs(self):
         critical_missing = []
         if not self.RSS_URL:
-            critical_missing.append("M-Team RSS订阅URL (MT_RSS_URL)")
-        if not self.TG_BOT_TOKEN:
-            critical_missing.append("Telegram机器人Token (TG_BOT_TOKEN)")
+            critical_missing.append("M-Team RSS订阅URL (MT_RSS_URL_MOVIE)")
+        if not self.TG_BOT_TOKEN_MONITOR:
+            critical_missing.append("Telegram机器人Token (TG_BOT_TOKEN_MONITOR)")
         if not self.TG_CHAT_ID:
             critical_missing.append("Telegram频道ID (TG_CHAT_ID)")
 
@@ -177,7 +205,7 @@ class Utils:
 
 class EmergencyNotifierConfig:
     def __init__(self, token: Optional[str], chat_id: Optional[str]):
-        self.TG_BOT_TOKEN: Optional[str] = token
+        self.TG_BOT_TOKEN_MONITOR: Optional[str] = token
         self.TG_CHAT_ID: Optional[str] = chat_id
         self.LOCAL_TIMEZONE: pytz.BaseTzInfo = pytz.timezone("Asia/Shanghai")
 
@@ -186,9 +214,9 @@ class TelegramNotifier:
     def __init__(self, config: Union[Config, EmergencyNotifierConfig]):
         self.config = config
         self.bot: Optional[Bot] = None
-        if self.config.TG_BOT_TOKEN and self.config.TG_CHAT_ID:
+        if self.config.TG_BOT_TOKEN_MONITOR and self.config.TG_CHAT_ID:
             try:
-                self.bot = Bot(token=self.config.TG_BOT_TOKEN)
+                self.bot = Bot(token=self.config.TG_BOT_TOKEN_MONITOR)
                 logger.info("🤖 Telegram机器人已成功初始化。")
             except Exception as e:
                 logger.error(f"🚫 初始化Telegram机器人失败: {e}")
@@ -211,30 +239,30 @@ class TelegramNotifier:
 
             messages_to_send = []
             if use_html and len(message) > max_len:
+                # 定义换行符
+                split_line_str = "------------------------"
+                split_line = f"{split_line_str}\n"
                 logger.warning(f"Telegram 消息过长 ({len(message)} > {max_len})，将被拆分为多条发送。")
                 current_message_part = ""
-                parts = message.split("\n🌸➖➖➖➖➖➖➖➖🌸\n")
+                parts = message.split(f"\n{split_line}")
 
-                if len(parts) <= 1 and "\n\n" in message and "🌸➖➖➖➖➖➖➖➖🌸" not in message:
+                if len(parts) <= 1 and "\n\n" in message and split_line_str not in message:
                     parts = message.split("\n\n")
-                if len(parts) <= 1 and "\n" in message and "🌸➖➖➖➖➖➖➖➖🌸" not in message and "\n\n" not in message:
+                if len(parts) <= 1 and "\n" in message and split_line_str not in message and "\n\n" not in message:
                     parts = message.split("\n")
 
                 for i, part_content in enumerate(parts):
                     part_to_add = part_content
                     is_last_part = (i == len(parts) - 1)
 
-                    # Add appropriate separator if not the last part and separator exists in original message
                     if not is_last_part:
-                        if message.count(
-                                "🌸➖➖➖➖➖➖➖➖🌸") > 0 and "🌸➖➖➖➖➖➖➖➖🌸" not in part_content:
-                            part_to_add += "\n🌸➖➖➖➖➖➖➖➖🌸\n"
+                        if message.count(split_line_str) > 0 and split_line_str not in part_content:
+                            part_to_add += f"\n{split_line}"
                         elif message.count("\n\n") > 0 and message.count(
-                                "🌸➖➖➖➖➖➖➖➖🌸") == 0 and "\n\n" not in part_content:
+                                split_line_str) == 0 and "\n\n" not in part_content:
                             part_to_add += "\n\n"
-                        elif message.count("\n") > 0 and message.count(
-                                "🌸➖➖➖➖➖➖➖➖🌸") == 0 and message.count(
-                            "\n\n") == 0 and "\n" not in part_content:
+                        elif message.count("\n") > 0 and message.count(split_line_str) == 0 and message.count(
+                                "\n\n") == 0 and "\n" not in part_content:
                             part_to_add += "\n"
 
                     if len(current_message_part) + len(part_to_add) <= max_len:
@@ -282,24 +310,17 @@ class TelegramNotifier:
         return False
 
     def format_torrent_message(self, torrent_info: Dict[str, Any]) -> str:
-        id_emoji = "🆔"
-        category_emoji = "🏷️"
-        subtitle_emoji = "📜"
-        name_emoji = "🔗"
-        size_emoji = "💾"
-        time_emoji = "⏰"
-
         header_parts = []
         torrent_id_val = self._escape_html(torrent_info.get('id', 'N/A'))
-        header_parts.append(f"{id_emoji}[<code>{torrent_id_val}</code>]")
+        header_parts.append(f"{EMOJI_ID}[<code>{torrent_id_val}</code>]")
 
         category_val = self._escape_html(torrent_info.get('category', 'N/A'))
         if category_val != 'N/A':
-            header_parts.append(f"{category_emoji}[{category_val}]")
+            header_parts.append(f"{EMOJI_CATEGORY}[{category_val}]")
 
         subtitle_val = self._escape_html(torrent_info.get('subtitle_cleaned', 'N/A'))
         if subtitle_val != 'N/A':
-            header_parts.append(f"{subtitle_emoji}[{subtitle_val}]")
+            header_parts.append(f"{EMOJI_SUBTITLE}[{subtitle_val}]")
 
         header = "".join(header_parts)
 
@@ -314,26 +335,26 @@ class TelegramNotifier:
         detail_link = self._escape_html(torrent_info.get('link', '#'))
 
         message = (
-            f"{header}\n"
-            f"{name_emoji} <b>资源名称:</b> <a href='{detail_link}'>{name}</a>\n"
-            f"{size_emoji} <b>资源大小:</b> {torrent_size}\n"
-            f"{time_emoji} <b>发布时间:</b> {pub_time_str}"
+            f"\n{header}\n"
+            f"{EMOJI_NAME} <b>资源名称:</b> <a href='{detail_link}'>{name}</a>\n"
+            f"{EMOJI_SIZE} <b>资源大小:</b> {torrent_size}\n"
+            f"{EMOJI_SIZE} <b>发布时间:</b> {pub_time_str}"
         )
         return message
 
-    def format_bulk_message(self, torrents: List[Dict[str, Any]], script_start_time: float) -> str:
+    def format_bulk_message(self, torrents: List[Dict[str, Any]]) -> str:
         if not torrents:
             logger.info(f"ℹ️ 本轮无新种子。")
             return ""
 
         count = len(torrents)
-        message_header = f"📢📢📢 馒头有新种啦！快来看看有没有你喜欢的 ({count}个新种):\n"
+        message_header = f"📢📢📢 馒头有新种啦！快来看看有没有你喜欢的 ({count}个新种):"
 
         messages = [message_header]
         for torrent in torrents:
             messages.append(self.format_torrent_message(torrent))
 
-        return "\n🌸➖➖➖➖➖➖➖➖🌸\n".join(messages)
+        return "\n".join(messages)
 
 
 class DataManager:
@@ -438,6 +459,10 @@ class DataManager:
             logger.error(f"🚫 保存数据时意外错误 ({type(e).__name__}): {e}")
 
 
+def get_mteam_category_name(category_id: str) -> str:
+    return MTEAM_CATEGORY_DATA.get(str(category_id), f"分类ID:{category_id}")
+
+
 class RSSParser:
     def __init__(self, config: Config):
         self.config = config
@@ -475,7 +500,7 @@ class RSSParser:
                 break
 
         subtitle_raw = "N/A"
-        subtitle_original_bracket = None
+        subtitle_original_bracket = None or ""
         tech_spec_indicators = r'\b(?:\d{3,4}p|x26[45]|HEVC|AVC|DTS|HDR|REMUX|BluRay|WEB-DL|MKV|AAC|FLAC|WEB|HDTV|SDTV|Rip|Encode|VXT|CtrlHD|WiKi|CHDBits|Series|Movie)\b'
 
         candidate_indices = []
@@ -507,14 +532,14 @@ class RSSParser:
         if size_original_bracket:
             name_component = name_component.replace(size_original_bracket, "", 1)
 
-        name_component = re.sub(r'\s*\[N/A\]\s*$', '', name_component).strip()
+        name_component = re.sub(r'\s*\[N/A]\s*$', '', name_component).strip()
         name_component = re.sub(r'\s{2,}', ' ', name_component).strip()
 
         if not name_component:
             name_component = title_full
             if category_original_bracket: name_component = name_component.replace(category_original_bracket, "", 1)
             if size_original_bracket: name_component = name_component.replace(size_original_bracket, "", 1)
-            name_component = re.sub(r'\s*\[N/A\]\s*$', '', name_component).strip()
+            name_component = re.sub(r'\s*\[N/A]\s*$', '', name_component).strip()
             name_component = re.sub(r'\s{2,}', ' ', name_component).strip()
             if not name_component: name_component = title_full
 
@@ -545,41 +570,31 @@ class RSSParser:
                     pub_date_str = item_element.findtext("pubDate")
                     guid_element = item_element.find("guid")
                     guid = guid_element.text if guid_element is not None else link
-
                     if not link or not pub_date_str:
                         logger.warning(f"条目缺少链接或发布日期，跳过: '{title_full[:50]}...'")
                         continue
-
                     id_regex = r"(?:id=|details?/|detail/)(\d+)"
                     torrent_id_match = re.search(id_regex, link)
                     if not torrent_id_match and guid:
                         torrent_id_match = re.search(id_regex, guid)
-
                     if not torrent_id_match:
                         logger.warning(f"无法从链接/GUID提取ID: {link} / {guid}. 跳过: '{title_full[:50]}...'")
                         continue
                     torrent_id = torrent_id_match.group(1)
-
-                    # Step 1: Parse parts from the full title using the existing method.
                     raw_cat_from_title, subtitle_raw, torrent_name_component, torrent_size = self._parse_mteam_title(
                         title_full)
                     subtitle_cleaned = Utils.clean_subtitle(subtitle_raw)
-
-                    # Step 2: Attempt to get a category identifier from a dedicated RSS tag.
                     category_id_or_name_from_tag: Optional[str] = item_element.findtext("category")
-
                     final_display_category_name = "N/A"
-
-                    # Priority 1: Use ID from tag if available and numeric
                     if category_id_or_name_from_tag and category_id_or_name_from_tag.isdigit():
-                        name_cht_from_id = self.category_manager.get_name_cht(category_id_or_name_from_tag,
-                                                                              is_id_lookup=True)
+                        name_cht_from_id = get_mteam_category_name(str(category_id_or_name_from_tag))
+                        # 如果报错，使用下面方式
+                        # name_cht_from_id = self.category_manager.get_name_cht(category_id_or_name_from_tag,
                         if name_cht_from_id:
                             final_display_category_name = name_cht_from_id
                             logger.debug(
                                 f"项目 {torrent_id}: 使用来自标签的分类ID '{category_id_or_name_from_tag}' 映射到 '{final_display_category_name}'.")
 
-                    # Priority 2: Use name from tag if not yet resolved and tag provided a name
                     if final_display_category_name == "N/A" and category_id_or_name_from_tag and not category_id_or_name_from_tag.isdigit():
                         name_cht_from_tag_name = self.category_manager.get_name_cht(category_id_or_name_from_tag,
                                                                                     is_id_lookup=False)
@@ -588,7 +603,6 @@ class RSSParser:
                             logger.debug(
                                 f"项目 {torrent_id}: 使用来自标签的分类名 '{category_id_or_name_from_tag}' 映射到 '{final_display_category_name}'.")
 
-                    # Priority 3: Use raw category name parsed from title if not yet resolved
                     if final_display_category_name == "N/A" and raw_cat_from_title and raw_cat_from_title != "N/A":
                         name_cht_from_title_parse = self.category_manager.get_name_cht(raw_cat_from_title,
                                                                                        is_id_lookup=False)
@@ -597,7 +611,6 @@ class RSSParser:
                             logger.debug(
                                 f"项目 {torrent_id}: 使用来自标题解析的分类名 '{raw_cat_from_title}' 映射到 '{final_display_category_name}'.")
 
-                    # Fallbacks if still "N/A"
                     if final_display_category_name == "N/A":
                         if raw_cat_from_title and raw_cat_from_title != "N/A":
                             final_display_category_name = raw_cat_from_title
@@ -607,7 +620,6 @@ class RSSParser:
                             final_display_category_name = category_id_or_name_from_tag
                             logger.warning(
                                 f"项目 {torrent_id}: 无法将分类 '{category_id_or_name_from_tag}' (来自标签) 映射到 nameCht。使用原始标签内容。")
-
                     try:
                         publish_time_naive = date_parser.parse(pub_date_str, tzinfos=self.config.TZ_INFOS)
                         if publish_time_naive.tzinfo is None or publish_time_naive.tzinfo.utcoffset(
@@ -700,7 +712,7 @@ class FeedMonitor:
             return 0
 
         logger.info(f"📨 准备推送 {len(current_batch_to_push)} 个新种子...")
-        full_message_content = self.notifier.format_bulk_message(current_batch_to_push, time.monotonic())
+        full_message_content = self.notifier.format_bulk_message(current_batch_to_push)
 
         if not full_message_content:
             logger.info("ℹ️ 格式化消息为空，本轮不发送Telegram通知。")
@@ -728,7 +740,7 @@ async def main():
 
     config_instance: Optional[Config] = None
     notifier_instance: Optional[TelegramNotifier] = None
-
+    logger.debug(f"初始化配置实例: {config_instance}")
     try:
         config_instance = Config()
         notifier_instance = TelegramNotifier(config_instance)
@@ -745,7 +757,7 @@ async def main():
     except SystemExit as e:
         logger.critical(f"🚫 配置错误导致中止: {e}")
         error_occurred_in_run = True
-        temp_tg_token_exit = os.environ.get("TG_BOT_TOKEN")
+        temp_tg_token_exit = os.environ.get("TG_BOT_TOKEN_MONITOR")
         temp_tg_chat_id_exit = os.environ.get("TG_CHAT_ID")
         if temp_tg_token_exit and temp_tg_chat_id_exit:
             emergency_config_exit = EmergencyNotifierConfig(temp_tg_token_exit, temp_tg_chat_id_exit)
@@ -773,18 +785,13 @@ async def main():
 
 
 if __name__ == "__main__":
-    # os.environ[
-    #     "MT_RSS_URL"] = "https://rss.m-team.cc/api/rss/fetch?dl=1&pageSize=20&sign=xxxxxxxxxxxxxxxxx&t=xxxxxxxxxxxx&teams=9%2C44%2C43%2C23&tkeys=ttitle%2Ctcat%2Ctsmalldescr%2Ctsize&uid=xxxxxxx"
-    # os.environ["TG_BOT_TOKEN"] = "7888888022:Tțgxxxxxxxxxxxxxxxxxxxxxx"
-    # os.environ["TG_CHAT_ID"] = "-10023243240"
-    # os.environ["LOG_LEVEL"] = "INFO"
 
-    required_env_vars_check = ["MT_RSS_URL", "TG_BOT_TOKEN", "TG_CHAT_ID"]
+    required_env_vars_check = ["MT_RSS_URL_MOVIE", "TG_BOT_TOKEN_MONITOR", "TG_CHAT_ID"]
     if any(not os.environ.get(var) for var in required_env_vars_check):
         missing_vars_str = ", ".join([var for var in required_env_vars_check if not os.environ.get(var)])
         logger.critical(f"启动前检查: 关键环境变量 {missing_vars_str} 未设置。脚本无法启动。")
 
-        temp_tg_token_main = os.environ.get("TG_BOT_TOKEN")
+        temp_tg_token_main = os.environ.get("TG_BOT_TOKEN_MONITOR")
         temp_tg_chat_id_main = os.environ.get("TG_CHAT_ID")
         if temp_tg_token_main and temp_tg_chat_id_main:
             emergency_config_main = EmergencyNotifierConfig(temp_tg_token_main, temp_tg_chat_id_main)
@@ -799,6 +806,6 @@ if __name__ == "__main__":
                 try:
                     asyncio.run(notify_env_error())
                 except Exception as e_notify:
-                    logger.error(f"发送紧急启动错误通知失败: {e_notify}")
+                    logger.error(f"发送启动错误通知失败: {e_notify}")
         sys.exit(1)
     asyncio.run(main())
